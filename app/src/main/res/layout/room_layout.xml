@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:elevation="5dp"
+    android:id="@+id/card"
+    android:layout_marginHorizontal="10dp"
+    android:layout_marginTop="15dp"
+    android:background="@drawable/middle_edittext">
+
+    <TextView
+        android:id="@+id/ques"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Room No: 403"
+        android:layout_marginEnd="50dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginVertical="5dp"
+        android:fontFamily="@font/nunito_sans_bold"
+        android:textSize="18sp"
+        android:textColor="#252525"/>
+
+    <TextView
+        android:id="@+id/marks"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="550 Square Ft"
+        android:layout_marginStart="5dp"
+        android:layout_marginVertical="5dp"
+        android:textColor="@color/colorAccent"
+        android:fontFamily="@font/nunito_sans_bold"
+        android:layout_below="@+id/ques"/>
+
+
+
+</RelativeLayout>
