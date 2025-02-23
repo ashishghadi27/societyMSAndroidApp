@@ -46,7 +46,11 @@ public class SignInFragment extends BaseFragment {
         login = view.findViewById(R.id.login);
         signUp = view.findViewById(R.id.signUp);
         forgotPass = view.findViewById(R.id.forgotPass);
-        dialog = getProgressDialog("Authenticating", "Verifying Credentials", false, getContext());
+        dialog = getProgressDialog("Authenticating", "Verifying Credentials",
+                false, getContext());
 
+        signUp.setOnClickListener((vw) -> {
+            addFragment(new SocietySelectorFragment(), "society-selector");
+        });
     }
 }

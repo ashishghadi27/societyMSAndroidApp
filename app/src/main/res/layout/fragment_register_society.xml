@@ -155,7 +155,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="-2dp"
-                    android:background="@drawable/middle_edittext"
+                    android:background="@drawable/bottom_edittext"
                     android:fontFamily="@font/nunito_sans"
                     android:hint="@string/plot_number"
                     android:inputType="number"
@@ -174,10 +174,12 @@
 
                     <ImageView
                         android:id="@+id/uploadImageView"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:scaleType="fitXY"
+                        android:padding="10dp"
                         android:background="@drawable/message_back"
-                        android:visibility="gone" />
+                        android:src="@drawable/no_data"/>
 
                     <Button
                         android:id="@+id/uploadImage"
@@ -200,10 +202,21 @@
                     android:layout_marginTop="10dp"
                     android:background="@drawable/allround_editext">
 
+                    <ImageView
+                        android:id="@+id/uploadFileView"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:src="@drawable/word"
+                        android:visibility="gone"
+                        android:padding="15dp"
+                        android:background="@drawable/message_back"
+                        />
+
                     <Button
-                        android:id="@+id/uploadsocietyRegistration"
+                        android:id="@+id/uploadSocietyRegistration"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/uploadFileView"
                         android:layout_centerVertical="true"
                         android:layout_margin="10dp"
                         android:fontFamily="@font/nunito_sans_bold"

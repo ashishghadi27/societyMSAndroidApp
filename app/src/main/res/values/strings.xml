@@ -50,7 +50,7 @@
     <string name="address_line_2">Address Line 2</string>
     <string name="address_line_1">Address Line 1</string>
     <string name="upload_profile_pic">Upload Profile Pic</string>
-    <string name="upload_society_registration">Upload Society Registration</string>
+    <string name="upload_society_registration">Upload Registration</string>
     <string name="enter_room_details">Enter Room Details</string>
     <string name="room_number">Room Number</string>
     <string name="room_size_in_square_feet">Room Size in square feet</string>

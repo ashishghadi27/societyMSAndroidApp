@@ -7,7 +7,7 @@
     android:clickable="true"
     android:focusable="true"
     android:background="@color/main_back"
-    tools:context=".Fragments.SignUp">
+    tools:context=".fragments.SocietySelectorFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -89,6 +89,13 @@
             android:orientation="vertical"
             android:layout_margin="10dp"
             android:padding="10dp">
+
+            <ImageView
+                android:id="@+id/noDataImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                android:src="@drawable/no_data"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"

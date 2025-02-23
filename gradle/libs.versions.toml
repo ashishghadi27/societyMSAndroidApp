@@ -36,6 +36,7 @@ androidx-constraintlayout = { group = "androidx.constraintlayout", name = "const
 volley = { group = "com.android.volley", name = "volley", version.ref = "volley" }
 apache-http-mime = { group = "org.apache.httpcomponents", name = "httpmime", version = "4.5.14" }
 apache-http-client = { group = "org.apache.httpcomponents", name = "httpclient", version = "4.5.14" }
+apache-tika = {group = 'org.apache.tika', name = 'tika-core', version = '1.4'}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
