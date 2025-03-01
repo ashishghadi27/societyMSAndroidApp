@@ -9,8 +9,6 @@ import com.root.sms.handlers.APICallResponseHandler;
 
 import org.json.JSONObject;
 
-import java.io.File;
-
 public class FileOperationsHelper implements APICallHandler {
 
     private final APICallHelper apiCaller;
@@ -32,7 +30,8 @@ public class FileOperationsHelper implements APICallHandler {
 
     @Override
     public void success(JSONObject object, int requestId) {
-
+        responseHandler.hideProgress();
+        responseHandler.onSuccess(object, requestId);
     }
 
     @Override

@@ -11,6 +11,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.root.sms.R;
+import com.root.sms.util.JsonSerializationUtils;
+import com.root.sms.vo.SocietyFileVO;
+import com.root.sms.vo.SocietyVO;
 
 public class BaseFragment extends Fragment {
 
@@ -58,6 +61,22 @@ public class BaseFragment extends Fragment {
         editor.putString("email", email);
         editor.putString("isAdmin", isAdmin);
         editor.apply();
+    }
+
+    public void saveSocietyDetails(SocietyVO societyVO){
+        SharedPreferences preferences = requireContext().getSharedPreferences("societyRegistrationDetails",  Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("societyData", JsonSerializationUtils.objectToJson(societyVO));
+        editor.apply();
+    }
+
+    public SocietyVO getSocietyDetails(){
+        SharedPreferences preferences = requireContext().getSharedPreferences("societyRegistrationDetails",  Context.MODE_PRIVATE);
+        String json = preferences.getString("societyData", null);
+        if(json != null){
+            return JsonSerializationUtils.jsonToObject(json, SocietyVO.class);
+        }
+        return null;
     }
 
     public void saveVideoState(String id, int state){

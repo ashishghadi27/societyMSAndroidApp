@@ -55,4 +55,8 @@
     <string name="room_number">Room Number</string>
     <string name="room_size_in_square_feet">Room Size in square feet</string>
     <string name="save_room_details">Save Room Details</string>
+    <string name="size_square_feet">Size (square feet)</string>
+    <string name="add_rooms">Add Rooms</string>
+    <string name="add_rooms_to_your_society">Add Rooms to your society</string>
+    <string name="hello">hello</string>
 </resources>

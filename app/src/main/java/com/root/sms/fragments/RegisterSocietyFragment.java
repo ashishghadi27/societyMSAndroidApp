@@ -10,39 +10,42 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
-import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
+
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SwitchCompat;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.android.volley.VolleyError;
 import com.root.sms.R;
+import com.root.sms.constants.APIConstants;
 import com.root.sms.constants.AppConstants;
 import com.root.sms.handlers.APICallResponseHandler;
 import com.root.sms.helpers.FileOperationsHelper;
+import com.root.sms.vo.SocietyFileVO;
+import com.root.sms.vo.SocietyVO;
 
-import org.apache.commons.logging.LogFactory;
+import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class RegisterSocietyFragment extends BaseFragment implements APICallResponseHandler {
@@ -52,7 +55,16 @@ public class RegisterSocietyFragment extends BaseFragment implements APICallResp
     private ActivityResultLauncher<Intent> fileActivityResultLauncher;
     private Button uploadImageButton, uploadFileButton;
     private ImageView imagePreview, filePreview;
+    private EditText societyNameEditText, addressLine1EditText,
+            addressLine2EditText, plotNumberEditText;
+    private SwitchCompat switchCompat;
+    private RelativeLayout addRooms;
     private ProgressDialog dialog;
+    private String currentFileName;
+    private String currentFileMimeType;
+    private String currentProfileImageFileName;
+    private String currentProfileImageMimeType;
+    private boolean isParkingAvailable;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -75,6 +87,23 @@ public class RegisterSocietyFragment extends BaseFragment implements APICallResp
         uploadFileButton = view.findViewById(R.id.uploadSocietyRegistration);
         imagePreview = view.findViewById(R.id.uploadImageView);
         filePreview = view.findViewById(R.id.uploadFileView);
+        societyNameEditText = view.findViewById(R.id.name);
+        addressLine1EditText = view.findViewById(R.id.addr1);
+        addressLine2EditText = view.findViewById(R.id.addr2);
+        plotNumberEditText = view.findViewById(R.id.plotNumber);
+        switchCompat = view.findViewById(R.id.parkingToggle);
+        addRooms = view.findViewById(R.id.addRooms);
+
+        switchCompat.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            isParkingAvailable = isChecked;
+        });
+
+        addRooms.setOnClickListener(view2 -> {
+            boolean societyDataSaved = saveSocietyData();
+            if(societyDataSaved){
+                replaceFragment(new AddRoomsFragment(), "ADD_ROOMS");
+            }
+        });
 
         uploadImageButton.setOnClickListener(view1 -> imagePicker());
         uploadFileButton.setOnClickListener(view1 -> filePicker());
@@ -84,13 +113,12 @@ public class RegisterSocietyFragment extends BaseFragment implements APICallResp
                 result -> {
                     if (result.getResultCode() == Activity.RESULT_OK) {
                         // There are no request codes
-                        Log.i("HERE", "");
                         Intent data = result.getData();
-                        Log.i("HERE:", (data == null) +"");
-                        Log.i("Image selected:" , data.getData().getPath().toString());
+                        assert data != null;
                         byte[] file = uriToFile(data.getData(), requireContext());
-                        fileOperationsHelper.uploadProfile(file,
-                                getMimeType(getContext(), data.getData()));
+                        currentProfileImageMimeType = getMimeType(getContext(),
+                                Objects.requireNonNull(data.getData()));
+                        fileOperationsHelper.uploadProfile(file, currentFileMimeType);
                         imagePreview.setVisibility(View.VISIBLE);
                         imagePreview.setImageURI(data.getData());
                     }
@@ -103,16 +131,12 @@ public class RegisterSocietyFragment extends BaseFragment implements APICallResp
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     if (result.getResultCode() == Activity.RESULT_OK) {
-                        // There are no request codes
-                        Log.i("HERE", "");
                         Intent data = result.getData();
-                        Log.i("HERE:", (data == null) +"");
-                        Log.i("Image selected:", data.getData().getPath().toString());
+                        assert data != null;
                         byte[] file = uriToFile(data.getData(), requireContext());
-                        fileOperationsHelper.uploadFile(file,
-                                getMimeType(getContext(), data.getData()));
-                        String fileType = getMimeType(getContext(), data.getData());
-                        Log.i("File Name:", fileType);
+                        currentFileMimeType = getMimeType(getContext(),
+                                Objects.requireNonNull(data.getData()));
+                        fileOperationsHelper.uploadFile(file, currentFileMimeType);
                         setFilePreview(getContext(), data.getData());
                     }
                     else {
@@ -120,6 +144,58 @@ public class RegisterSocietyFragment extends BaseFragment implements APICallResp
                     }
 
                 });
+    }
+
+    private boolean saveSocietyData() {
+        boolean isEmpty = false;
+        SocietyVO societyVO = new SocietyVO();
+        societyVO.setName(societyNameEditText.getText().toString());
+        societyVO.setAddressLine1(addressLine1EditText.getText().toString());
+        societyVO.setAddressLine2(addressLine2EditText.getText().toString());
+        societyVO.setPlotNumber(plotNumberEditText.getText().toString());
+        societyVO.setParkingAvailable(isParkingAvailable);
+
+        if(StringUtils.isEmpty(societyVO.getName())){
+            societyNameEditText.setError("Society name is required");
+            isEmpty = true;
+        }
+        if(StringUtils.isEmpty(societyVO.getAddressLine1())){
+            addressLine1EditText.setError("Address Line 1 is required");
+            isEmpty = true;
+        }
+        if(StringUtils.isEmpty(societyVO.getPlotNumber())){
+            plotNumberEditText.setError("Plot Number is required");
+            isEmpty = true;
+        }
+
+        if(StringUtils.isEmpty(currentFileName)){
+            getAlertDialog("Upload Society Registration", "Society Registration is Required", getContext()).show();
+            isEmpty = true;
+        }
+
+        if(StringUtils.isEmpty(currentProfileImageFileName)){
+            getAlertDialog("Upload Society Profile Image", "Profile Image is Required", getContext()).show();
+            isEmpty = true;
+        }
+
+        if(!isEmpty){
+            SocietyFileVO profileImage = new SocietyFileVO();
+            profileImage.setFileName(currentProfileImageFileName);
+            profileImage.setFileType(currentProfileImageMimeType);
+
+            SocietyFileVO file = new SocietyFileVO();
+            file.setFileName(currentFileName);
+            file.setFileType(currentFileMimeType);
+
+            List<SocietyFileVO> files = new ArrayList<>();
+            files.add(profileImage);
+            files.add(file);
+            societyVO.setFiles(files);
+
+            saveSocietyDetails(societyVO);
+            return true;
+        }
+        return false;
     }
 
     public void imagePicker() {
@@ -228,7 +304,7 @@ public class RegisterSocietyFragment extends BaseFragment implements APICallResp
 
     private String getMimeType(Context context, Uri uri) {
         String mimeType = null;
-        if (uri.getScheme().equals(ContentResolver.SCHEME_CONTENT)) {
+        if (Objects.equals(uri.getScheme(), ContentResolver.SCHEME_CONTENT)) {
             mimeType = context.getContentResolver().getType(uri);
         } else {
             String fileExtension = MimeTypeMap.getFileExtensionFromUrl(uri.toString());
@@ -238,13 +314,29 @@ public class RegisterSocietyFragment extends BaseFragment implements APICallResp
     }
 
     @Override
-    public void onSuccess(JSONObject jsonObject) {
-
+    public void onSuccess(JSONObject jsonObject, int requestId) {
+        switch (requestId){
+            case APIConstants.profileUploadApiRequestId:
+                this.currentProfileImageFileName = jsonObject.optString("filename");
+                Log.i("IMAGE UPLOAD RESPONSE", jsonObject.toString());
+                getAlertDialog("Upload Success", "Image Uploaded Successfully", getContext()).show();
+                break;
+            case APIConstants.fileUploadApiRequestId:
+                this.currentFileName = jsonObject.optString("filename");
+                Log.i("FILE UPLOAD RESPONSE", jsonObject.toString());
+                getAlertDialog("Upload Success", "File Uploaded Successfully", getContext()).show();
+                break;
+        }
     }
 
     @Override
-    public void onFailure(VolleyError e) {
-
+    public void onFailure(VolleyError e, int requestId) {
+        switch (requestId){
+            case APIConstants.profileUploadApiRequestId:
+            case APIConstants.fileUploadApiRequestId:
+                getAlertDialog("Upload Failed", "Something went wrong. Please try again later.", getContext()).show();
+                break;
+        }
     }
 
     @Override

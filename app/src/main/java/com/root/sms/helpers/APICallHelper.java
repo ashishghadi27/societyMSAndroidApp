@@ -5,18 +5,14 @@ import android.util.Log;
 import android.webkit.MimeTypeMap;
 
 import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.root.sms.constants.AppConstants;
-import com.root.sms.fragments.RegisterSocietyFragment;
 import com.root.sms.handlers.APICallHandler;
 
-import org.apache.commons.logging.LogFactory;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
@@ -24,14 +20,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Arrays;
 import java.util.HashMap;
 
 
 public class APICallHelper {
-
-    //private static final Log log = LogFactory.getLog(APICallHelper.class);
-
     private RequestQueue queue;
     private APICallHandler handler;
     private Context context;
@@ -99,16 +91,18 @@ public class APICallHelper {
                              String url, String mimeType) {
         Log.i("Upload API Call", requestId + "");
         MultipartRequest request = new MultipartRequest(url, new HashMap<>(),
-                new Response.Listener<NetworkResponse>() {
-                    @Override
-                    public void onResponse(NetworkResponse response) {
-
+                response -> {
+                    Log.v("Response: ", response.toString());
+                    try {
+                        handler.success(new JSONObject(new String(response.data)), requestId);
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
                     }
                 },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                    }
+                error -> {
+                    Log.v("Response Post:", error.getCause() + "    " + error.getMessage());
+                    Log.v("ERROR", error.toString());
+                    handler.failure(error, requestId);
                 });
         String fileName = System.currentTimeMillis() + "." +MimeTypeMap.getSingleton().getExtensionFromMimeType(mimeType);
         request.addPart(new MultipartRequest.FilePart("file", mimeType, fileName, file));

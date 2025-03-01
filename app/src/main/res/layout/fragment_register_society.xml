@@ -100,6 +100,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:orientation="vertical"
+
                 android:padding="10dp">
 
                 <EditText
@@ -155,7 +156,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="-2dp"
-                    android:background="@drawable/bottom_edittext"
+                    android:background="@drawable/middle_edittext"
                     android:fontFamily="@font/nunito_sans"
                     android:hint="@string/plot_number"
                     android:inputType="number"
@@ -165,6 +166,42 @@
                     android:textColor="#272626"
                     android:textColorHint="#a9a9a9"
                     android:textSize="15sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="-2dp"
+                    android:background="@drawable/bottom_edittext"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="20dp"
+                    android:gravity="center_vertical"
+                    android:paddingVertical="15dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/nunito_sans"
+                        android:text="Parking Available"
+                        android:textColor="#A09E9E"
+                        android:textSize="15sp" />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/parkingToggle"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_sans_bold"
+                        android:textOff="No"
+                        android:textOn="Yes"
+                        android:textColor="@color/grey"
+                        android:thumb="@drawable/toggle_thumb"
+                        android:paddingVertical="5dp"
+                        android:layout_margin="5dp"
+                        android:textAlignment="center"
+                        android:textAllCaps="false"
+                        android:checked="false"
+                        />
+                </LinearLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -178,6 +215,7 @@
                         android:layout_height="70dp"
                         android:scaleType="fitXY"
                         android:padding="10dp"
+                        android:visibility="gone"
                         android:background="@drawable/message_back"
                         android:src="@drawable/no_data"/>
 

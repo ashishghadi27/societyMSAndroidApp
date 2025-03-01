@@ -7,10 +7,10 @@
     android:id="@+id/card"
     android:layout_marginHorizontal="10dp"
     android:layout_marginTop="15dp"
-    android:background="@drawable/middle_edittext">
+    android:background="@drawable/allround_editext">
 
     <TextView
-        android:id="@+id/ques"
+        android:id="@+id/roomNumber"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Room No: 403"
@@ -22,7 +22,7 @@
         android:textColor="#252525"/>
 
     <TextView
-        android:id="@+id/marks"
+        android:id="@+id/roomSize"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="550 Square Ft"
@@ -30,7 +30,7 @@
         android:layout_marginVertical="5dp"
         android:textColor="@color/colorAccent"
         android:fontFamily="@font/nunito_sans_bold"
-        android:layout_below="@+id/ques"/>
+        android:layout_below="@+id/roomNumber"/>
 
 
 

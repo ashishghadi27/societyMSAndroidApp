@@ -5,5 +5,12 @@
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@color/white</item>
+        <item name="android:buttonStyleToggle">@style/ToggleButtonStyle</item>
+    </style>
+    <style name="ToggleButtonStyle">
+        <item name="android:textOff">No</item>
+        <item name="android:textOn">Yes</item>
+        <item name="android:textColor">@color/grey</item>
+        <item name="android:thumb">@drawable/toggle_thumb</item>
     </style>
 </resources>

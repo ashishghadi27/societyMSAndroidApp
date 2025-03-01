@@ -33,7 +33,7 @@ public class AuthenticationHelper implements APICallHandler {
     public void success(JSONObject object, int requestId) {
         switch (requestId){
             case APIConstants.loginPostApiRequestId:
-                responseHandler.onSuccess(object);
+                responseHandler.onSuccess(object, requestId);
                 responseHandler.hideProgress();
                 break;
         }

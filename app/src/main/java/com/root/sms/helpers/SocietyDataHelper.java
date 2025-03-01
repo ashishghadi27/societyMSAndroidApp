@@ -3,10 +3,17 @@ package com.root.sms.helpers;
 import android.content.Context;
 
 import com.android.volley.VolleyError;
+import com.root.sms.constants.APIConstants;
 import com.root.sms.handlers.APICallHandler;
 import com.root.sms.handlers.APICallResponseHandler;
+import com.root.sms.util.JsonSerializationUtils;
+import com.root.sms.vo.RoomVO;
+import com.root.sms.vo.SocietyVO;
 
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.List;
 
 public class SocietyDataHelper implements APICallHandler {
 
@@ -19,9 +26,22 @@ public class SocietyDataHelper implements APICallHandler {
         apiCaller = new APICallHelper(context, this);
     }
 
+    public void addSociety(SocietyVO societyVO) throws JSONException {
+        apiCaller.postCall(APIConstants.addSocietyApi,
+                new JSONObject(JsonSerializationUtils.objectToJson(societyVO)),
+                APIConstants.addSocietyApiRequestId);
+    }
+
+    public void addRooms(List<RoomVO> roomVOList) throws JSONException {
+        apiCaller.postCall(APIConstants.addRoomsApi,
+                new JSONObject(JsonSerializationUtils.objectToJson(roomVOList)),
+                APIConstants.addRoomsApiRequestId);
+    }
+
     @Override
     public void success(JSONObject object, int requestId) {
-
+        responseHandler.hideProgress();
+        responseHandler.onSuccess(object, requestId);
     }
 
     @Override

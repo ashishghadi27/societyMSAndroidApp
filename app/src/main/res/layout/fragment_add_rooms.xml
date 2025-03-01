@@ -1,229 +1,156 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/main_back"
+    android:orientation="vertical"
     android:clickable="true"
     android:focusable="true"
-    android:orientation="vertical"
-    tools:context=".fragments.RegisterSocietyFragment">
+    android:background="@color/main_back"
+    tools:context=".fragments.SocietySelectorFragment">
 
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:orientation="vertical">
+            android:id="@+id/topPanel"
+            android:layout_margin="20dp">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="20dp">
-
-                <ImageView
-                    android:id="@+id/logo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:elevation="3dp"
-                    android:src="@drawable/ic_logo" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_toEndOf="@+id/logo"
-                    android:gravity="end"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/nunito_sans"
-                        android:text="@string/society_already_registered"
-                        android:textSize="15sp" />
-
-                    <TextView
-                        android:id="@+id/signIn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:fontFamily="@font/nunito_sans"
-                        android:text="@string/sign_in"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="15sp"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-
-            </RelativeLayout>
-
-
-            <TextView
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginTop="2dp"
-                android:fontFamily="@font/nunito_sans"
-                android:text="Add Rooms"
-                android:textColor="#000"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:id="@+id/logo"
+                android:elevation="3dp"
+                android:src="@drawable/ic_logo"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true" />
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:orientation="vertical"
-                android:padding="10dp">
-
-                <EditText
-                    android:id="@+id/name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/top_edittext"
-                    android:fontFamily="@font/nunito_sans"
-                    android:hint="@string/society_name"
-                    android:inputType="textPersonName"
-                    android:lineSpacingExtra="5.3sp"
-                    android:padding="20dp"
-                    android:singleLine="true"
-                    android:textColor="#272626"
-                    android:textColorHint="#a9a9a9"
-                    android:textSize="15sp" />
-
-
-                <EditText
-                    android:id="@+id/addr1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="-2dp"
-                    android:background="@drawable/middle_edittext"
-                    android:fontFamily="@font/nunito_sans"
-                    android:hint="@string/address_line_1"
-                    android:inputType="textEmailAddress"
-                    android:lineSpacingExtra="5.3sp"
-                    android:padding="20dp"
-                    android:singleLine="true"
-                    android:textColor="#272626"
-                    android:textColorHint="#a9a9a9"
-                    android:textSize="15sp" />
-
-                <EditText
-                    android:id="@+id/addr2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="-2dp"
-                    android:background="@drawable/middle_edittext"
-                    android:fontFamily="@font/nunito_sans"
-                    android:hint="@string/address_line_2"
-                    android:inputType="textEmailAddress"
-                    android:lineSpacingExtra="5.3sp"
-                    android:padding="20dp"
-                    android:singleLine="true"
-                    android:textColor="#272626"
-                    android:textColorHint="#a9a9a9"
-                    android:textSize="15sp" />
-
-                <EditText
-                    android:id="@+id/plotNumber"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="-2dp"
-                    android:background="@drawable/middle_edittext"
-                    android:fontFamily="@font/nunito_sans"
-                    android:hint="@string/plot_number"
-                    android:inputType="number"
-                    android:lineSpacingExtra="5.3sp"
-                    android:padding="20dp"
-                    android:singleLine="true"
-                    android:textColor="#272626"
-                    android:textColorHint="#a9a9a9"
-                    android:textSize="15sp" />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/allround_editext">
-
-                    <ImageView
-                        android:id="@+id/uploadImageView"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:background="@drawable/message_back"
-                        android:visibility="gone" />
-
-                    <Button
-                        android:id="@+id/uploadImage"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_margin="10dp"
-                        android:layout_toEndOf="@+id/uploadImageView"
-                        android:fontFamily="@font/nunito_sans_bold"
-                        android:text="@string/upload_profile_pic"
-                        android:textAllCaps="false"
-                        android:textSize="18sp" />
-
-                </RelativeLayout>
-
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/allround_editext">
-
-                    <Button
-                        android:id="@+id/uploadsocietyRegistration"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_margin="10dp"
-                        android:fontFamily="@font/nunito_sans_bold"
-                        android:text="@string/upload_society_registration"
-                        android:textAllCaps="false"
-                        android:textSize="18sp" />
-
-                </RelativeLayout>
-
-            </LinearLayout>
-
-
-            <RelativeLayout
-                android:id="@+id/addRooms"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="40dp"
-                android:background="@drawable/blue_filled_back"
-                android:elevation="3dp"
-                android:padding="18dp">
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/logo"
+                android:gravity="end"
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:drawableEnd="@drawable/ic_right_arrow"
-                    android:drawablePadding="7dp"
                     android:fontFamily="@font/nunito_sans"
-                    android:text="Proceed To Add Room Details"
-                    android:textColor="#fff"
-                    android:textSize="20sp" />
+                    android:textSize="15sp"
+                    android:text="@string/society_not_found" />
 
-            </RelativeLayout>
+                <TextView
+                    android:id="@+id/registerSociety"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_sans"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:layout_marginStart="5dp"
+                    android:textColor="@color/colorPrimary"
+                    android:text="@string/register_society" />
 
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/welcomeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sacramento"
+            android:text="Almost Done"
+            android:layout_below="@+id/topPanel"
+            android:textColor="@color/colorPrimary"
+            android:layout_marginStart="20dp"
+            android:textSize="35sp" />
+
+        <TextView
+            android:id="@+id/addRoomText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nunito_sans"
+            android:textSize="18sp"
+            android:layout_marginTop="5dp"
+            android:layout_marginHorizontal="20dp"
+            android:textColor="#000"
+            android:layout_below="@+id/welcomeText"
+            android:text="@string/add_rooms_to_your_society" />
+
+
+        <LinearLayout
+            android:id="@+id/recyclerViewLay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/addRoomText"
+            android:layout_above="@+id/saveDetails"
+            android:orientation="vertical"
+            android:layout_margin="10dp"
+            android:padding="10dp">
+
+            <ImageView
+                android:id="@+id/noDataImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                android:src="@drawable/no_data" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="5dp"
+                android:id="@+id/recyclerView" />
 
         </LinearLayout>
 
-    </ScrollView>
+        <ImageView
+            android:id="@+id/addRoom"
+            android:visibility="visible"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="10dp"
+            android:layout_alignBottom="@id/recyclerViewLay"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/plus"
+            android:padding="20dp"
+            android:elevation="5dp"
+            android:background="@drawable/circularback" />
+
+        <RelativeLayout
+            android:id="@+id/saveDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/blue_filled_back"
+            android:elevation="3dp"
+            android:padding="18dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:drawablePadding="7dp"
+                android:fontFamily="@font/nunito_sans"
+                android:text="Save Details"
+                android:textColor="#fff"
+                android:textSize="20sp"
+                app:drawableEndCompat="@drawable/ic_right_arrow" />
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
 </LinearLayout>

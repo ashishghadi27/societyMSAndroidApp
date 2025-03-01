@@ -37,6 +37,9 @@ volley = { group = "com.android.volley", name = "volley", version.ref = "volley"
 apache-http-mime = { group = "org.apache.httpcomponents", name = "httpmime", version = "4.5.14" }
 apache-http-client = { group = "org.apache.httpcomponents", name = "httpclient", version = "4.5.14" }
 apache-tika = {group = 'org.apache.tika', name = 'tika-core', version = '1.4'}
+apache-commons-lang3 = { group = "org.apache.commons", name = "commons-lang3", version = "3.12.0" }
+lombok = { group = "org.projectlombok", name = "lombok", version = "1.18.20" }
+jackson = { group = "com.fasterxml.jackson.core", name = "jackson-databind", version = "2.15.3" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
