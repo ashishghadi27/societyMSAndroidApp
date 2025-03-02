@@ -9,6 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 public class RoomVO {
     private Long societyId;
+    private Long rid;
     private String roomNo;
     private String roomSize;
 }

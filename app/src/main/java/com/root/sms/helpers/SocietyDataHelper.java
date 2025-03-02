@@ -7,6 +7,7 @@ import com.root.sms.constants.APIConstants;
 import com.root.sms.handlers.APICallHandler;
 import com.root.sms.handlers.APICallResponseHandler;
 import com.root.sms.util.JsonSerializationUtils;
+import com.root.sms.vo.MemberVO;
 import com.root.sms.vo.RoomVO;
 import com.root.sms.vo.SocietyVO;
 
@@ -38,6 +39,11 @@ public class SocietyDataHelper implements APICallHandler {
                 APIConstants.addRoomsApiRequestId);
     }
 
+    public void getRooms(Long sid){
+        String api = String.format(APIConstants.getRoomsApi, sid);
+        apiCaller.getCall(api, APIConstants.getRoomsApiRequestId);
+    }
+
     @Override
     public void success(JSONObject object, int requestId) {
         responseHandler.hideProgress();
@@ -46,6 +52,13 @@ public class SocietyDataHelper implements APICallHandler {
 
     @Override
     public void failure(VolleyError e, int requestId) {
+        responseHandler.hideProgress();
+        responseHandler.onFailure(e, requestId);
+    }
 
+    public void registerMember(MemberVO memberVO) throws JSONException {
+        apiCaller.postCall(APIConstants.registerMemberApi,
+                new JSONObject(JsonSerializationUtils.objectToJson(memberVO)),
+                APIConstants.registerMemberApiRequestId);
     }
 }

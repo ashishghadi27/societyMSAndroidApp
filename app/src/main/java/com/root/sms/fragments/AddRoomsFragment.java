@@ -44,6 +44,7 @@ public class AddRoomsFragment extends BaseFragment implements APICallResponseHan
     private List<RoomVO> roomVOList;
     private RoomAdapter roomAdapter;
     private SocietyDataHelper societyDataHelper;
+    private String societyId;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -79,7 +80,12 @@ public class AddRoomsFragment extends BaseFragment implements APICallResponseHan
 
         saveDetails.setOnClickListener(view2 -> {
             saveSocietyAndRoomDetails();
-
+            Bundle bundle = new Bundle();
+            bundle.putString("societyId", societyId);
+            bundle.putBoolean("isFirstUser", true);
+            Fragment fragment = new RoomSelector();
+            fragment.setArguments(bundle);
+            addFragment(fragment, "ROOM SELECTOR");
         });
 
     }
@@ -142,6 +148,26 @@ public class AddRoomsFragment extends BaseFragment implements APICallResponseHan
         }
     }
 
+    @Override
+    public void onFailure(VolleyError e, int requestId) {
+        switch (requestId){
+            case APIConstants.addSocietyApiRequestId:
+            case APIConstants.addRoomsApiRequestId:
+                getAlertDialog("Error", "Something went wrong. Please try again later.", getContext()).show();
+                break;
+        }
+    }
+
+    @Override
+    public void showProgress() {
+        dialog.show();
+    }
+
+    @Override
+    public void hideProgress() {
+        dialog.dismiss();
+    }
+
     private void saveSocietyAndRoomDetails() {
         SocietyVO societyVO = getSocietyDetails();
         try {
@@ -164,6 +190,7 @@ public class AddRoomsFragment extends BaseFragment implements APICallResponseHan
     private void setSocietyIdForAllRooms(JSONObject jsonObject) {
         try{
             String societyId = jsonObject.getString("sid");
+            this.societyId = societyId;
             for (RoomVO roomVO : roomVOList){
                 roomVO.setSocietyId(Long.parseLong(societyId));
             }
@@ -172,25 +199,5 @@ public class AddRoomsFragment extends BaseFragment implements APICallResponseHan
             getAlertDialog("Error", "Something went wrong. Please try again later.", getContext()).show();
             Log.e("JSON_ERROR", Objects.requireNonNull(e.getMessage()));
         }
-    }
-
-    @Override
-    public void onFailure(VolleyError e, int requestId) {
-        switch (requestId){
-            case APIConstants.addSocietyApiRequestId:
-            case APIConstants.addRoomsApiRequestId:
-                getAlertDialog("Upload Failed", "Something went wrong. Please try again later.", getContext()).show();
-                break;
-        }
-    }
-
-    @Override
-    public void showProgress() {
-        dialog.show();
-    }
-
-    @Override
-    public void hideProgress() {
-        dialog.dismiss();
     }
 }

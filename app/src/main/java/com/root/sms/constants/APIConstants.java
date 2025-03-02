@@ -2,7 +2,7 @@ package com.root.sms.constants;
 
 public final class APIConstants {
 
-    public static final String domain = "http://192.168.29.148:";
+    private static final String domain = "http://192.168.29.148:";
     private static final String portNo = "8085";
     private static final String fileApiPortNo = "8090";
     private static final String domainSuffix = "/api";
@@ -24,4 +24,9 @@ public final class APIConstants {
     public static final String addRoomsApi = finalDomain + "/sms/room/addRooms";
     public static final int addRoomsApiRequestId = 1005;
 
+    public static final String getRoomsApi = finalDomain + "/sms/room/getRooms?societyId=%s";
+    public static final int getRoomsApiRequestId = 1006;
+
+    public static final String registerMemberApi = finalDomain + "/sms/room/addRooms";
+    public static final int registerMemberApiRequestId = 1007;
 }
