@@ -8,6 +8,7 @@ import com.root.sms.handlers.APICallHandler;
 import com.root.sms.handlers.APICallResponseHandler;
 import com.root.sms.util.JsonSerializationUtils;
 import com.root.sms.vo.MemberVO;
+import com.root.sms.vo.RoomRequest;
 import com.root.sms.vo.RoomVO;
 import com.root.sms.vo.SocietyVO;
 
@@ -28,18 +29,22 @@ public class SocietyDataHelper implements APICallHandler {
     }
 
     public void addSociety(SocietyVO societyVO) throws JSONException {
+        responseHandler.showProgress();
         apiCaller.postCall(APIConstants.addSocietyApi,
                 new JSONObject(JsonSerializationUtils.objectToJson(societyVO)),
                 APIConstants.addSocietyApiRequestId);
     }
 
-    public void addRooms(List<RoomVO> roomVOList) throws JSONException {
+    public void addRooms(RoomRequest request) throws JSONException {
+        responseHandler.showProgress();
+        String json = JsonSerializationUtils.objectToJson(request);
         apiCaller.postCall(APIConstants.addRoomsApi,
-                new JSONObject(JsonSerializationUtils.objectToJson(roomVOList)),
+                new JSONObject(json),
                 APIConstants.addRoomsApiRequestId);
     }
 
     public void getRooms(Long sid){
+        responseHandler.showProgress();
         String api = String.format(APIConstants.getRoomsApi, sid);
         apiCaller.getCall(api, APIConstants.getRoomsApiRequestId);
     }
@@ -57,6 +62,7 @@ public class SocietyDataHelper implements APICallHandler {
     }
 
     public void registerMember(MemberVO memberVO) throws JSONException {
+        responseHandler.showProgress();
         apiCaller.postCall(APIConstants.registerMemberApi,
                 new JSONObject(JsonSerializationUtils.objectToJson(memberVO)),
                 APIConstants.registerMemberApiRequestId);

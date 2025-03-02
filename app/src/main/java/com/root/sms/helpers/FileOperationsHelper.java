@@ -20,12 +20,14 @@ public class FileOperationsHelper implements APICallHandler {
         apiCaller = new APICallHelper(context, this);
     }
 
-    public void uploadFile(byte[] file, String mimeType){
-        apiCaller.uploadFile(file, APIConstants.fileUploadApiRequestId, APIConstants.fileUploadApi, mimeType);
+    public void uploadFile(byte[] file, String mimeType, String fileName){
+        responseHandler.showProgress();
+        apiCaller.uploadFile(file, APIConstants.fileUploadApiRequestId, APIConstants.fileUploadApi, mimeType, fileName);
     }
 
-    public void uploadProfile(byte[] file, String mimeType){
-        apiCaller.uploadFile(file, APIConstants.profileUploadApiRequestId, APIConstants.profileUploadApi, mimeType);
+    public void uploadProfile(byte[] file, String mimeType, String fileName){
+        responseHandler.showProgress();
+        apiCaller.uploadFile(file, APIConstants.profileUploadApiRequestId, APIConstants.profileUploadApi, mimeType, fileName);
     }
 
     @Override

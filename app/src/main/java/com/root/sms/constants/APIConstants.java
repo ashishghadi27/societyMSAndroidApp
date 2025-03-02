@@ -18,15 +18,15 @@ public final class APIConstants {
     public static final String profileUploadApi = fileApiDomain + "/sms/files/upload-profile";
     public static final int profileUploadApiRequestId = 1003;
 
-    public static final String addSocietyApi = finalDomain + "/sms/societies/register";
+    public static final String addSocietyApi = finalDomain + "/society-mgmt-service/sms/societies/register";
     public static final int addSocietyApiRequestId = 1004;
 
-    public static final String addRoomsApi = finalDomain + "/sms/room/addRooms";
+    public static final String addRoomsApi = finalDomain + "/society-mgmt-service/sms/room/addRooms";
     public static final int addRoomsApiRequestId = 1005;
 
-    public static final String getRoomsApi = finalDomain + "/sms/room/getRooms?societyId=%s";
+    public static final String getRoomsApi = finalDomain + "/society-mgmt-service/sms/room/getRooms?societyId=%s";
     public static final int getRoomsApiRequestId = 1006;
 
-    public static final String registerMemberApi = finalDomain + "/sms/room/addRooms";
+    public static final String registerMemberApi = finalDomain + "/society-mgmt-service/sms/member/addMember";
     public static final int registerMemberApiRequestId = 1007;
 }

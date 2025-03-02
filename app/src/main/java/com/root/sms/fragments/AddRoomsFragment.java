@@ -23,6 +23,7 @@ import com.root.sms.adapters.RoomAdapter;
 import com.root.sms.constants.APIConstants;
 import com.root.sms.handlers.APICallResponseHandler;
 import com.root.sms.helpers.SocietyDataHelper;
+import com.root.sms.vo.RoomRequest;
 import com.root.sms.vo.RoomVO;
 import com.root.sms.vo.SocietyVO;
 
@@ -80,14 +81,17 @@ public class AddRoomsFragment extends BaseFragment implements APICallResponseHan
 
         saveDetails.setOnClickListener(view2 -> {
             saveSocietyAndRoomDetails();
-            Bundle bundle = new Bundle();
-            bundle.putString("societyId", societyId);
-            bundle.putBoolean("isFirstUser", true);
-            Fragment fragment = new RoomSelector();
-            fragment.setArguments(bundle);
-            addFragment(fragment, "ROOM SELECTOR");
         });
 
+    }
+
+    private void addRoomSelectorFragment() {
+        Bundle bundle = new Bundle();
+        bundle.putString("societyId", societyId);
+        bundle.putBoolean("isFirstUser", true);
+        Fragment fragment = new RoomSelector();
+        fragment.setArguments(bundle);
+        addFragment(fragment, "ROOM SELECTOR");
     }
 
     private void showAddRoomDialog() {
@@ -140,10 +144,10 @@ public class AddRoomsFragment extends BaseFragment implements APICallResponseHan
             case APIConstants.addSocietyApiRequestId:
                 setSocietyIdForAllRooms(jsonObject);
                 saveRooms(roomVOList);
-                getAlertDialog("Success", "Society Registered Successfully", getContext()).show();
                 break;
             case APIConstants.addRoomsApiRequestId:
                 getAlertDialog("Success", "Added Rooms to Society Successfully", getContext()).show();
+                addRoomSelectorFragment();
                 break;
         }
     }
@@ -180,7 +184,8 @@ public class AddRoomsFragment extends BaseFragment implements APICallResponseHan
 
     private void saveRooms(List<RoomVO> roomVOList) {
         try {
-            societyDataHelper.addRooms(roomVOList);
+            RoomRequest request = new RoomRequest(roomVOList);
+            societyDataHelper.addRooms(request);
         } catch (JSONException e) {
             getAlertDialog("Error", "Something went wrong. Please try again later.", getContext()).show();
             Log.e("JSON_ERROR", Objects.requireNonNull(e.getMessage()));
@@ -189,7 +194,8 @@ public class AddRoomsFragment extends BaseFragment implements APICallResponseHan
 
     private void setSocietyIdForAllRooms(JSONObject jsonObject) {
         try{
-            String societyId = jsonObject.getString("sid");
+            String societyId = jsonObject.getJSONObject("data").getString("sid");
+            Log.i("SOCIETY ID", societyId);
             this.societyId = societyId;
             for (RoomVO roomVO : roomVOList){
                 roomVO.setSocietyId(Long.parseLong(societyId));

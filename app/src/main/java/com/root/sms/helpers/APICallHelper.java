@@ -88,7 +88,7 @@ public class APICallHelper {
     }
 
     public void uploadFile(byte[] file, int requestId,
-                             String url, String mimeType) {
+                             String url, String mimeType, String fileName) {
         Log.i("Upload API Call", requestId + "");
         MultipartRequest request = new MultipartRequest(url, new HashMap<>(),
                 response -> {
@@ -104,7 +104,6 @@ public class APICallHelper {
                     Log.v("ERROR", error.toString());
                     handler.failure(error, requestId);
                 });
-        String fileName = System.currentTimeMillis() + "." +MimeTypeMap.getSingleton().getExtensionFromMimeType(mimeType);
         request.addPart(new MultipartRequest.FilePart("file", mimeType, fileName, file));
 
         this.queue.add(request);

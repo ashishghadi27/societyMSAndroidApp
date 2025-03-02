@@ -39,6 +39,7 @@ import com.root.sms.vo.SocietyFileVO;
 import com.root.sms.vo.SocietyVO;
 
 import org.apache.commons.lang3.StringUtils;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
@@ -47,6 +48,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 public class RegisterSocietyFragment extends BaseFragment implements APICallResponseHandler {
 
@@ -118,7 +120,10 @@ public class RegisterSocietyFragment extends BaseFragment implements APICallResp
                         byte[] file = uriToFile(data.getData(), requireContext());
                         currentProfileImageMimeType = getMimeType(getContext(),
                                 Objects.requireNonNull(data.getData()));
-                        fileOperationsHelper.uploadProfile(file, currentFileMimeType);
+                        currentProfileImageFileName = UUID.randomUUID() +
+                                "." + MimeTypeMap.getSingleton()
+                                .getExtensionFromMimeType(currentProfileImageMimeType);
+                        fileOperationsHelper.uploadProfile(file, currentFileMimeType, currentProfileImageFileName);
                         imagePreview.setVisibility(View.VISIBLE);
                         imagePreview.setImageURI(data.getData());
                     }
@@ -136,7 +141,10 @@ public class RegisterSocietyFragment extends BaseFragment implements APICallResp
                         byte[] file = uriToFile(data.getData(), requireContext());
                         currentFileMimeType = getMimeType(getContext(),
                                 Objects.requireNonNull(data.getData()));
-                        fileOperationsHelper.uploadFile(file, currentFileMimeType);
+                        currentFileName = UUID.randomUUID()
+                                + "." +MimeTypeMap.getSingleton()
+                                .getExtensionFromMimeType(currentFileMimeType);
+                        fileOperationsHelper.uploadFile(file, currentFileMimeType, currentFileName);
                         setFilePreview(getContext(), data.getData());
                     }
                     else {
@@ -317,12 +325,20 @@ public class RegisterSocietyFragment extends BaseFragment implements APICallResp
     public void onSuccess(JSONObject jsonObject, int requestId) {
         switch (requestId){
             case APIConstants.profileUploadApiRequestId:
-                this.currentProfileImageFileName = jsonObject.optString("filename");
+                try {
+                    this.currentProfileImageFileName = jsonObject.getJSONObject("data").optString("fileName");
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
                 Log.i("IMAGE UPLOAD RESPONSE", jsonObject.toString());
                 getAlertDialog("Upload Success", "Image Uploaded Successfully", getContext()).show();
                 break;
             case APIConstants.fileUploadApiRequestId:
-                this.currentFileName = jsonObject.optString("filename");
+                try {
+                    this.currentFileName = jsonObject.getJSONObject("data").optString("fileName");
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
                 Log.i("FILE UPLOAD RESPONSE", jsonObject.toString());
                 getAlertDialog("Upload Success", "File Uploaded Successfully", getContext()).show();
                 break;

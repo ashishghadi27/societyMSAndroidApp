@@ -62,7 +62,6 @@ public class RoomSelector extends BaseFragment implements RoomClickHandler, APIC
         societyId = bundle.getString("societyId", "");
         isFirstUser = bundle.getBoolean("isFirstUser");
 
-        societyDataHelper.getRooms(Long.valueOf(societyId));
         dialog = getProgressDialog("Please wait", "API Call in progress", false, getContext());
         return inflater.inflate(R.layout.fragment_room_selector, container, false);
     }
@@ -75,6 +74,8 @@ public class RoomSelector extends BaseFragment implements RoomClickHandler, APIC
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(roomAdapter);
+
+        societyDataHelper.getRooms(Long.valueOf(societyId));
 
         if(roomVOList.isEmpty()) {
             noDataImage.setVisibility(View.VISIBLE);
@@ -114,6 +115,14 @@ public class RoomSelector extends BaseFragment implements RoomClickHandler, APIC
                 roomVO.setSocietyId(Long.valueOf(societyId));
                 roomVOList.add(roomVO);
             }
+            if(roomVOList.isEmpty()) {
+                noDataImage.setVisibility(View.VISIBLE);
+                recyclerView.setVisibility(View.GONE);
+            }
+            else {
+                noDataImage.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.VISIBLE);
+            }
 
         } catch (JSONException e) {
             getAlertDialog("Error", "Something went wrong. Please try again later.", getContext()).show();
@@ -126,6 +135,7 @@ public class RoomSelector extends BaseFragment implements RoomClickHandler, APIC
         switch (requestId){
             case APIConstants.getRoomsApiRequestId:
                 populateRoomList(jsonObject);
+                roomAdapter.notifyDataSetChanged();
                 getAlertDialog("Success", "Society Registered Successfully", getContext()).show();
                 break;
         }
