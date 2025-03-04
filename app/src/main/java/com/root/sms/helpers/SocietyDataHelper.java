@@ -28,6 +28,11 @@ public class SocietyDataHelper implements APICallHandler {
         apiCaller = new APICallHelper(context, this);
     }
 
+    public void getSocieties(Long id){
+        responseHandler.showProgress();
+        apiCaller.getCall(String.format(APIConstants.getSocietyApi, id), APIConstants.getSocietyApiRequestId);
+    }
+
     public void addSociety(SocietyVO societyVO) throws JSONException {
         responseHandler.showProgress();
         apiCaller.postCall(APIConstants.addSocietyApi,

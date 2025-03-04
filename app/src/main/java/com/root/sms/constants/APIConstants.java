@@ -9,7 +9,7 @@ public final class APIConstants {
     private static final String finalDomain = domain + portNo + domainSuffix;
     private static final String fileApiDomain = domain + fileApiPortNo;
 
-    public static final String loginPostApi = finalDomain + "/user/login";
+    public static final String loginPostApi = finalDomain + "/auth-service/auth/user/login";
     public static final int loginPostApiRequestId = 1001;
 
     public static final String fileUploadApi = fileApiDomain + "/sms/files/upload";
@@ -29,4 +29,7 @@ public final class APIConstants {
 
     public static final String registerMemberApi = finalDomain + "/society-mgmt-service/sms/member/addMember";
     public static final int registerMemberApiRequestId = 1007;
+
+    public static final String getSocietyApi = finalDomain + "/society-mgmt-service/sms/societies/get?id=%s";
+    public static final int getSocietyApiRequestId = 1008;
 }

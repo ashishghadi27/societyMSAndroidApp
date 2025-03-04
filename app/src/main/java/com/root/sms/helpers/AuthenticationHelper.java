@@ -23,7 +23,7 @@ public class AuthenticationHelper implements APICallHandler {
 
     public void login(String email, String password) throws JSONException {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("email", email);
+        jsonObject.put("emailId", email);
         jsonObject.put("password", password);
         responseHandler.showProgress();
         apiCaller.postCall(APIConstants.loginPostApi, jsonObject, APIConstants.loginPostApiRequestId);
@@ -33,14 +33,19 @@ public class AuthenticationHelper implements APICallHandler {
     public void success(JSONObject object, int requestId) {
         switch (requestId){
             case APIConstants.loginPostApiRequestId:
-                responseHandler.onSuccess(object, requestId);
                 responseHandler.hideProgress();
+                responseHandler.onSuccess(object, requestId);
                 break;
         }
     }
 
     @Override
     public void failure(VolleyError e, int requestId) {
-
+        switch (requestId){
+            case APIConstants.loginPostApiRequestId:
+                responseHandler.hideProgress();
+                responseHandler.onFailure(e, requestId);
+                break;
+        }
     }
 }

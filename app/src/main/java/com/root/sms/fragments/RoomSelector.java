@@ -136,7 +136,6 @@ public class RoomSelector extends BaseFragment implements RoomClickHandler, APIC
             case APIConstants.getRoomsApiRequestId:
                 populateRoomList(jsonObject);
                 roomAdapter.notifyDataSetChanged();
-                getAlertDialog("Success", "Society Registered Successfully", getContext()).show();
                 break;
         }
     }

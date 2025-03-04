@@ -12,8 +12,11 @@ import androidx.fragment.app.Fragment;
 
 import com.root.sms.R;
 import com.root.sms.util.JsonSerializationUtils;
+import com.root.sms.vo.MemberVO;
 import com.root.sms.vo.SocietyFileVO;
 import com.root.sms.vo.SocietyVO;
+
+import org.json.JSONObject;
 
 public class BaseFragment extends Fragment {
 
@@ -116,6 +119,42 @@ public class BaseFragment extends Fragment {
         SharedPreferences.Editor editor = preferences.edit();
         editor.clear();
         editor.apply();
+    }
+
+    public void saveAuthCookie(String cookie){
+        SharedPreferences preferences = requireContext().getSharedPreferences("cookie",  Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("auth", cookie);
+        editor.apply();
+    }
+
+    public String getAuthCookie(){
+        SharedPreferences preferences = requireContext().getSharedPreferences("cookie",  Context.MODE_PRIVATE);
+        return preferences.getString("auth", null);
+    }
+
+    public void saveSessionCookie(String cookie){
+        SharedPreferences preferences = requireContext().getSharedPreferences("cookie",  Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("session", cookie);
+        editor.apply();
+    }
+
+    public String getSessionCookie(){
+        SharedPreferences preferences = requireContext().getSharedPreferences("cookie",  Context.MODE_PRIVATE);
+        return preferences.getString("session", null);
+    }
+
+    public void saveMemberDetails(JSONObject member) {
+        SharedPreferences preferences = requireContext().getSharedPreferences("memberDetails",  Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("memberData", member.toString());
+        editor.apply();
+    }
+
+    public MemberVO getMemberDetails(){
+        SharedPreferences preferences = requireContext().getSharedPreferences("memberDetails",  Context.MODE_PRIVATE);
+        return JsonSerializationUtils.jsonToObject(preferences.getString("memberData", null), MemberVO.class);
     }
 
 }

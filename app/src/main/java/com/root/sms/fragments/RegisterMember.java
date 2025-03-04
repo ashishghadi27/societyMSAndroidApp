@@ -1,6 +1,7 @@
 package com.root.sms.fragments;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import androidx.fragment.app.Fragment;
 
 import com.android.volley.VolleyError;
 import com.root.sms.R;
+import com.root.sms.activities.AuthenticationActivity;
 import com.root.sms.constants.APIConstants;
 import com.root.sms.constants.MemberConstants;
 import com.root.sms.handlers.APICallResponseHandler;
@@ -113,7 +115,10 @@ public class RegisterMember extends BaseFragment implements APICallResponseHandl
     public void onSuccess(JSONObject jsonObject, int requestId) {
         switch (requestId){
             case APIConstants.registerMemberApiRequestId:
-                getAlertDialog("Success", "Society Registered Successfully", getContext()).show();
+                getAlertDialog("Success", "Member Registered Successfully", getContext()).show();
+                Intent intent = new Intent(getContext(), AuthenticationActivity.class);
+                startActivity(intent);
+                requireActivity().finish();
                 break;
         }
     }

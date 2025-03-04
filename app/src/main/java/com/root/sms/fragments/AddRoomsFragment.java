@@ -74,6 +74,12 @@ public class AddRoomsFragment extends BaseFragment implements APICallResponseHan
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(roomAdapter);
 
+        if(roomVOList.isEmpty()){
+            noDataImage.setVisibility(View.VISIBLE);
+        }
+        else {
+            recyclerView.setVisibility(View.VISIBLE);
+        }
 
         addRoom.setOnClickListener(view1 -> {
           showAddRoomDialog();
@@ -107,6 +113,13 @@ public class AddRoomsFragment extends BaseFragment implements APICallResponseHan
         submit.setOnClickListener(view -> {
             addRoomToList(roomNumberEditText, roomSizeEditText);
         });
+
+        if(roomVOList.isEmpty()){
+            noDataImage.setVisibility(View.VISIBLE);
+        }
+        else {
+            recyclerView.setVisibility(View.VISIBLE);
+        }
     }
 
     private void addRoomToList(EditText roomNumberEditText, EditText roomSizeEditText) {

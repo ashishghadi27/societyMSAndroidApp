@@ -37,8 +37,8 @@
 
 
     <TextView
-        android:id="@+id/marks"
-        android:layout_width="wrap_content"
+        android:id="@+id/address"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Plot No 63, Damle Colony, Kanjurmarg East, Mumbai 400042"
         android:layout_marginVertical="5dp"
