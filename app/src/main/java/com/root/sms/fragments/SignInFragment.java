@@ -133,6 +133,8 @@ public class SignInFragment extends BaseFragment implements APICallResponseHandl
             if (jsonObject.getBoolean("validUser")){
                 JSONObject member = jsonObject.getJSONObject("user");
                 saveMemberDetails(member);
+                saveSocietyDetails(jsonObject.getJSONObject("society"));
+                saveRoomDetails(jsonObject.getJSONObject("room"));
                 launchHome();
             }
             else {

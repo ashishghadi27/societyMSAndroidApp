@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import com.root.sms.R;
 import com.root.sms.util.JsonSerializationUtils;
 import com.root.sms.vo.MemberVO;
+import com.root.sms.vo.RoomVO;
 import com.root.sms.vo.SocietyFileVO;
 import com.root.sms.vo.SocietyVO;
 
@@ -152,9 +153,33 @@ public class BaseFragment extends Fragment {
         editor.apply();
     }
 
+    public void saveSocietyDetails(JSONObject society) {
+        SharedPreferences preferences = requireContext().getSharedPreferences("societyDetails",  Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("societyData", society.toString());
+        editor.apply();
+    }
+
+    public void saveRoomDetails(JSONObject room) {
+        SharedPreferences preferences = requireContext().getSharedPreferences("roomDetails",  Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("roomData", room.toString());
+        editor.apply();
+    }
+
     public MemberVO getMemberDetails(){
         SharedPreferences preferences = requireContext().getSharedPreferences("memberDetails",  Context.MODE_PRIVATE);
         return JsonSerializationUtils.jsonToObject(preferences.getString("memberData", null), MemberVO.class);
+    }
+
+    public SocietyVO getSocietyDetailsAfterLogin(){
+        SharedPreferences preferences = requireContext().getSharedPreferences("societyDetails",  Context.MODE_PRIVATE);
+        return JsonSerializationUtils.jsonToObject(preferences.getString("societyData", null), SocietyVO.class);
+    }
+
+    public RoomVO getRoomDetails(){
+        SharedPreferences preferences = requireContext().getSharedPreferences("roomDetails",  Context.MODE_PRIVATE);
+        return JsonSerializationUtils.jsonToObject(preferences.getString("roomData", null), RoomVO.class);
     }
 
 }

@@ -32,4 +32,19 @@ public final class APIConstants {
 
     public static final String getSocietyApi = finalDomain + "/society-mgmt-service/sms/societies/get?id=%s";
     public static final int getSocietyApiRequestId = 1008;
+
+    public static final String addParkingSpacesApi = finalDomain + "/society-mgmt-service/sms/parkingspace/addParkingSpaces";
+    public static final int addParkingSpacesApiRequestId = 1009;
+
+    public static final String getParkingSpacesApi = finalDomain + "/society-mgmt-service/sms/parkingspace/getParkingSpaces?societyId=%s";
+    public static final int getParkingSpacesApiRequestId = 1010;
+
+    public static final String getMembersWithNoParkingApi = finalDomain + "/society-mgmt-service/sms/member/getMembersWithNoParking?societyId=%s";
+    public static final int getMembersWithNoParkingRequestId = 1011;
+
+    public static final String allotParkingApi = finalDomain + "/society-mgmt-service/sms/parkingspaceallotment/add?memberId=%s&parkingSpaceId=%s";
+    public static final int allotParkingRequestId = 1012;
+
+    public static final String createMeetingApi = finalDomain + "/society-mgmt-service/sms/meetings/create";
+    public static final int createMeetingRequestId = 1013;
 }

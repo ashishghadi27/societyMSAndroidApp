@@ -2,6 +2,11 @@ package com.root.sms.fragments;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -9,19 +14,14 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-
 import com.android.volley.VolleyError;
 import com.root.sms.R;
-import com.root.sms.adapters.RoomSelectorAdapter;
+import com.root.sms.adapters.ParkingSlotSelectorAdapter;
 import com.root.sms.constants.APIConstants;
 import com.root.sms.handlers.APICallResponseHandler;
-import com.root.sms.handlers.RoomClickHandler;
+import com.root.sms.handlers.ParkingSlotClickHandler;
 import com.root.sms.helpers.SocietyDataHelper;
+import com.root.sms.vo.ParkingSpaceVO;
 import com.root.sms.vo.RoomVO;
 
 import org.json.JSONArray;
@@ -32,16 +32,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class RoomSelector extends BaseFragment implements RoomClickHandler, APICallResponseHandler {
+public class ParkingSelectorFragment extends BaseFragment implements ParkingSlotClickHandler, APICallResponseHandler {
 
     private ProgressDialog dialog;
     private ImageView noDataImage;
     private RecyclerView recyclerView;
-    private List<RoomVO> roomVOList;
-    private RoomSelectorAdapter roomAdapter;
+    private List<ParkingSpaceVO> parkingSpaceVOList;
+    private ParkingSlotSelectorAdapter adapter;
     private SocietyDataHelper societyDataHelper;
-    private String societyId;
-    private boolean isFirstUser;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,17 +51,12 @@ public class RoomSelector extends BaseFragment implements RoomClickHandler, APIC
                              Bundle savedInstanceState) {
 
 
-        roomVOList = new ArrayList<>();
-        roomAdapter = new RoomSelectorAdapter(roomVOList, this);
+        parkingSpaceVOList = new ArrayList<>();
+        adapter = new ParkingSlotSelectorAdapter(parkingSpaceVOList, this);
         societyDataHelper = new SocietyDataHelper(getContext(), this);
 
-        Bundle bundle = getArguments();
-        assert bundle != null;
-        societyId = bundle.getString("societyId", "");
-        isFirstUser = bundle.getBoolean("isFirstUser");
-
         dialog = getProgressDialog("Please wait", "API Call in progress", false, getContext());
-        return inflater.inflate(R.layout.fragment_room_selector, container, false);
+        return inflater.inflate(R.layout.fragment_parking_selector, container, false);
     }
 
     @Override
@@ -73,11 +66,11 @@ public class RoomSelector extends BaseFragment implements RoomClickHandler, APIC
         recyclerView = view.findViewById(R.id.recyclerView);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        recyclerView.setAdapter(roomAdapter);
+        recyclerView.setAdapter(adapter);
 
-        societyDataHelper.getRooms(Long.valueOf(societyId));
+        societyDataHelper.getParkingSpaces(getSocietyDetailsAfterLogin().getSid());
 
-        if(roomVOList.isEmpty()) {
+        if(parkingSpaceVOList.isEmpty()) {
             noDataImage.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.GONE);
         }
@@ -87,35 +80,19 @@ public class RoomSelector extends BaseFragment implements RoomClickHandler, APIC
         }
     }
 
-    @Override
-    public void onRoomClick(RoomVO roomVO) {
-
-        Bundle bundle = new Bundle();
-        bundle.putLong("societyId",roomVO.getSocietyId());
-        bundle.putLong("rid",roomVO.getRid());
-        bundle.putString("roomNo",roomVO.getRoomNo());
-        bundle.putString("roomSize",roomVO.getRoomSize());
-        bundle.putBoolean("isFirstUser",isFirstUser);
-
-        Fragment fragment = new AddParkingSpacesFragment();
-        fragment.setArguments(bundle);
-
-        addFragment(fragment,"PARKING SPACES");
-    }
-
-    private void populateRoomList(JSONObject jsonObject) {
+    private void populateParkingList(JSONObject jsonObject) {
         try {
             JSONArray jsonArray = jsonObject.getJSONArray("data");
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject object = jsonArray.getJSONObject(i);
-                RoomVO roomVO = new RoomVO();
-                roomVO.setRid(object.getLong("rid"));
-                roomVO.setRoomNo(object.getString("roomNo"));
-                roomVO.setRoomSize(object.getString("roomSize"));
-                roomVO.setSocietyId(Long.valueOf(societyId));
-                roomVOList.add(roomVO);
+                ParkingSpaceVO parkingSpaceVO = new ParkingSpaceVO();
+                parkingSpaceVO.setPid(object.getLong("pid"));
+                parkingSpaceVO.setParkingId(object.getString("parkingId"));
+                parkingSpaceVO.setSocietyId(object.getLong("societyId"));
+
+                parkingSpaceVOList.add(parkingSpaceVO);
             }
-            if(roomVOList.isEmpty()) {
+            if(parkingSpaceVOList.isEmpty()) {
                 noDataImage.setVisibility(View.VISIBLE);
                 recyclerView.setVisibility(View.GONE);
             }
@@ -133,9 +110,9 @@ public class RoomSelector extends BaseFragment implements RoomClickHandler, APIC
     @Override
     public void onSuccess(JSONObject jsonObject, int requestId) {
         switch (requestId){
-            case APIConstants.getRoomsApiRequestId:
-                populateRoomList(jsonObject);
-                roomAdapter.notifyDataSetChanged();
+            case APIConstants.getParkingSpacesApiRequestId:
+                populateParkingList(jsonObject);
+                adapter.notifyDataSetChanged();
                 break;
         }
     }
@@ -143,7 +120,7 @@ public class RoomSelector extends BaseFragment implements RoomClickHandler, APIC
     @Override
     public void onFailure(VolleyError e, int requestId) {
         switch (requestId){
-            case APIConstants.getRoomsApiRequestId:
+            case APIConstants.getParkingSpacesApiRequestId:
                 getAlertDialog("Error", "Something went wrong. Please try again later.", getContext()).show();
                 break;
         }
@@ -157,5 +134,17 @@ public class RoomSelector extends BaseFragment implements RoomClickHandler, APIC
     @Override
     public void hideProgress() {
         dialog.dismiss();
+    }
+
+    @Override
+    public void onSlotClick(ParkingSpaceVO parkingSpaceVO) {
+        Bundle bundle = new Bundle();
+        bundle.putLong("pid",parkingSpaceVO.getPid());
+        bundle.putString("parkingSlotId",parkingSpaceVO.getParkingId());
+
+        Fragment fragment = new MemberSelectorFragment();
+        fragment.setArguments(bundle);
+
+        addFragment(fragment,"REGISTER MEMBER");
     }
 }

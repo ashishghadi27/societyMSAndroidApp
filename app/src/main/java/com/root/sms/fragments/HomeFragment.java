@@ -5,24 +5,19 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.root.sms.R;
 import com.root.sms.activities.AuthenticationActivity;
+import com.root.sms.constants.MemberConstants;
 import com.root.sms.vo.MemberVO;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link HomeFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class HomeFragment extends BaseFragment {
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,9 +34,27 @@ public class HomeFragment extends BaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         TextView welcomeText = view.findViewById(R.id.welcomeText);
+        RelativeLayout adminControls = view.findViewById(R.id.adminControls);
+        RelativeLayout meetingDetails = view.findViewById(R.id.meetingDetails);
+        RelativeLayout memberDetails = view.findViewById(R.id.memberDetails);
+
+        meetingDetails.setOnClickListener(v -> {
+            getAlertDialog("No Data!", "No Meeting is completed yet!", getContext()).show();
+        });
+
+        memberDetails.setOnClickListener(v -> {
+            addFragment(new MemberDetailsFragment(), "MEMBER DETAILS");
+        });
+
         MemberVO memberVO = getMemberDetails();
         if(memberVO != null){
             welcomeText.setText(String.format("Welcome %s", memberVO.getFirstName()));
+            if (MemberConstants.ADMIN.name().equals(memberVO.getType())){
+                adminControls.setVisibility(View.VISIBLE);
+                adminControls.setOnClickListener(v -> {
+                    addFragment(new AdminControlsFragment(), "ADMIN CONTROLS");
+                });
+            }
         }
         else {
             Intent intent = new Intent(getContext(), AuthenticationActivity.class);
@@ -50,4 +63,5 @@ public class HomeFragment extends BaseFragment {
         }
         super.onViewCreated(view, savedInstanceState);
     }
+
 }

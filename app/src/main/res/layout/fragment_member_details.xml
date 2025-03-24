@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:fontFamily="@font/sacramento"
-            android:text="welcome user"
+            android:text="hello user"
             android:textColor="@color/colorPrimary"
             android:textSize="35sp" />
 
@@ -50,7 +50,7 @@
                         android:fontFamily="@font/nunito_sans_bold"
                         android:textColor="#2E2E2E"
                         android:textSize="20sp"
-                        android:text="Upcoming Meetings"/>
+                        android:text="Room Details"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -61,6 +61,7 @@
                         android:background="@drawable/allround_editext">
 
                         <TextView
+                            android:id="@+id/roomNumber"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/colorPrimary"
@@ -68,6 +69,7 @@
                             android:text="Diwali Meeting"/>
 
                         <TextView
+                            android:id="@+id/roomDesc"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/message_back"
@@ -140,99 +142,6 @@
             </LinearLayout>
 
         </ScrollView>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/nunito_sans_bold"
-            android:textColor="#2E2E2E"
-            android:textSize="20sp"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="-25dp"
-            android:layout_marginStart="10dp"
-            android:layout_alignTop="@+id/controlsLayout"
-            android:text="Controls"/>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/controlsLayout"
-            android:layout_alignParentBottom="true"
-            >
-
-            <RelativeLayout
-                android:id="@+id/meetingDetails"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:elevation="2dp"
-                android:layout_marginVertical="10dp"
-                android:layout_marginHorizontal="5dp"
-                android:layout_alignParentStart="true"
-                android:padding="10dp"
-                android:background="@drawable/allround_editext">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Meeting\nDetails"
-                    android:textAlignment="center"
-                    android:fontFamily="@font/nunito_sans_bold"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="15sp"
-                    android:layout_margin="10dp"
-                    />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/memberDetails"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:elevation="2dp"
-                android:layout_marginVertical="10dp"
-                android:layout_marginHorizontal="5dp"
-                android:padding="10dp"
-                android:layout_centerInParent="true"
-                android:background="@drawable/allround_editext">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Member\nDetails"
-                    android:textAlignment="center"
-                    android:fontFamily="@font/nunito_sans_bold"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="15sp"
-                    android:layout_margin="10dp"
-                    />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:elevation="2dp"
-                android:layout_marginVertical="10dp"
-                android:layout_marginHorizontal="5dp"
-                android:layout_alignParentEnd="true"
-                android:padding="10dp"
-                android:id="@+id/adminControls"
-                android:background="@drawable/allround_editext">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAlignment="center"
-                    android:text="Admin\nControls"
-                    android:fontFamily="@font/nunito_sans_bold"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="15sp"
-                    android:layout_margin="10dp"
-                    />
-
-            </RelativeLayout>
-
-        </RelativeLayout>
 
     </RelativeLayout>
 </LinearLayout>

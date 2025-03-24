@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_back"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="vertical"
+    tools:context=".fragments.RegisterSocietyFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp">
+
+                <ImageView
+                    android:id="@+id/logo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:elevation="3dp"
+                    android:src="@drawable/ic_logo" />
+
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:fontFamily="@font/sacramento"
+                android:text="meeting creation"
+                android:textColor="@color/colorPrimary"
+                android:textSize="35sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/nunito_sans"
+                android:text="Schedule a meeting"
+                android:textColor="#000"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="25dp"
+                android:fontFamily="@font/nunito_sans"
+                android:text="@string/enter_details"
+                android:textColor="#000"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <EditText
+                    android:id="@+id/title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/top_edittext"
+                    android:fontFamily="@font/nunito_sans"
+                    android:hint="Title"
+                    android:inputType="textPersonName"
+                    android:lineSpacingExtra="5.3sp"
+                    android:padding="20dp"
+                    android:singleLine="true"
+                    android:textColor="#272626"
+                    android:textColorHint="#a9a9a9"
+                    android:textSize="15sp" />
+
+
+                <EditText
+                    android:id="@+id/agenda"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="-2dp"
+                    android:background="@drawable/middle_edittext"
+                    android:fontFamily="@font/nunito_sans"
+                    android:hint="Agenda"
+                    android:inputType="textEmailAddress"
+                    android:lineSpacingExtra="5.3sp"
+                    android:padding="20dp"
+                    android:singleLine="true"
+                    android:textColor="#272626"
+                    android:textColorHint="#a9a9a9"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/startDateTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_sans"
+                    android:background="@drawable/middle_edittext"
+                    android:textColor="#272626"
+                    android:textColorHint="#a9a9a9"
+                    android:hint="Start Date Time"
+                    android:textSize="15sp"
+                    android:padding="20dp"
+                    />
+
+                <TextView
+                    android:id="@+id/endDateTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bottom_edittext"
+                    android:fontFamily="@font/nunito_sans"
+                    android:textColor="#272626"
+                    android:textColorHint="#a9a9a9"
+                    android:hint="End Date Time"
+                    android:textSize="15sp"
+                    android:padding="20dp"
+                    />
+
+                            </LinearLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/createMeeting"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="40dp"
+                android:background="@drawable/blue_filled_back"
+                android:elevation="3dp"
+                android:padding="18dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:drawableEnd="@drawable/ic_right_arrow"
+                    android:drawablePadding="7dp"
+                    android:fontFamily="@font/nunito_sans"
+                    android:text="Create Meeting"
+                    android:textColor="#fff"
+                    android:textSize="20sp" />
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+</LinearLayout>
